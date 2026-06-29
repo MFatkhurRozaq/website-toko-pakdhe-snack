@@ -1,3 +1,9 @@
+NAMA: M.FATKHUR ROZAQ
+NIM: 101230058
+KELAS: TF23A
+MATA KULIAH: TECHNOPRENEURSHIP
+
+
 # Warung Online 🏪
 
 **Sistem POS & Manajemen Inventaris** untuk **Toko Pakdhe Snack** — dibangun dengan PHP native, MySQL, JavaScript, dan CSS.
