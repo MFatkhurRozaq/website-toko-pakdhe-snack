@@ -4,7 +4,7 @@ KELAS: TF23A
 MATA KULIAH: TECHNOPRENEURSHIP
 
 
-# Warung Online 🏪
+# Warung Online - PAKDHE SNACK🏪
 
 **Sistem POS & Manajemen Inventaris** untuk **Toko Pakdhe Snack** — dibangun dengan PHP native, MySQL, JavaScript, dan CSS.
 
