@@ -45,38 +45,82 @@
 # ATURAN WAJIB UNTUK SEMUA AI MODEL DALAM PENGEMBANGAN & PEMELIHARAAN APLIKASI:
 # ────────────────────────────────────────────────────────────────────────────────
 #
-# R1 — SELESAI UPDATE → TEST LOKAL DAHULU
-#   Setelah melakukan perubahan kode apa pun di localhost, WAJIB menjalankan
-#   pengujian lokal terlebih dahulu sebelum tindakan lain.
-#   Local test command: python AGENT.py --test
+# SIKLUS UTAMA (WAJIB):  Update Lokal → Test Lokal → Push/Commit → CI Auto-Test
+#                         ↕                              ↕
+#                    Analisa & Perbaiki ←── Gagal ←── (jika gagal)
 #
-# R2 — LOLOS TEST → PUSH & COMMIT KE GITHUB
-#   Jika semua test lokal lolos (✅ ALL TESTS PASSED), lanjutkan dengan:
-#     git add .
-#     git commit -m "<deskripsi perubahan>"
-#     git push
-#   Gunakan pesan commit yang deskriptif dan sesuai konvensi proyek.
+# ── R1: UPDATE DI LOCALHOST ──────────────────────────────────────────────────
+#   Setelah melakukan perubahan kode, WAJIB simpan semua file terlebih dahulu.
+#   Jangan push, jangan commit, jangan deploy — sebelum test lokal lolos.
 #
-# R3 — SETELAH PUSH → TES OTOMATIS DI GITHUB
-#   Setelah push ke GitHub, pantau hasil Auto-Test (GitHub Actions / CI).
-#   Pastikan pipeline CI berjalan sukses.
+# ── R2: TEST LOKAL (WAJIB SEBELUM PUSH) ──────────────────────────────────────
+#   Langkah-langkah test lokal:
+#     1. Buka terminal di direktori proyek (C:\xampp\htdocs\warung-online)
+#     2. Jalankan perintah:   python AGENT.py --test
+#     3. Tunggu hingga seluruh test selesai (39 test)
+#     4. Periksa output: ✅ ALL TESTS PASSED
+#     5. JIKA GAGAL → jangan lanjut ke R3, ulangi R1 (perbaiki kode)
 #
-# R4 — GAGAL TEST → ANALISA & TEST ULANG
-#   Jika ada test yang gagal (baik lokal maupun CI):
-#     a. Analisis penyebab kegagalan dari log error
-#     b. Perbaiki kode yang bermasalah
-#     c. Test ulang di localhost (kembali ke R1)
-#     d. Ulangi sampai semua test lolos (lokal + CI)
+# ── R3: LOLOS TEST LOKAL → COMMIT & PUSH KE GITHUB ──────────────────────────
+#   Hanya jika R2 lolos (✅ ALL TESTS PASSED), lakukan:
+#     1. git add .
+#     2. git commit -m "<deskripsi perubahan yang JELAS>"
+#        Format pesan commit:
+#          feat:     <fitur baru>
+#          fix:      <perbaikan bug>
+#          update:   <perubahan/peningkatan>
+#          refactor: <refaktor kode>
+#          docs:     <dokumentasi>
+#          test:     <perubahan test>
+#          chore:    <tugas teknis>
+#     3. git push
+#     4. Jangan tinggalkan terminal — pantau hasil push
 #
-# R5 — JANGAN SKIP LANGKAH
-#   Dilarang melewati urutan: Update → Test Lokal → Push → CI → (jika gagal) Analisa → Perbaiki → Test Ulang
+# ── R4: SETELAH PUSH → CI AUTO-TEST DI GITHUB ───────────────────────────────
+#   Setelah git push:
+#     1. GitHub Actions akan otomatis menjalankan workflow CI
+#     2. Buka tab Actions di repositori GitHub untuk memantau
+#     3. Tunggu sampai workflow selesai (≈1-2 menit)
+#     4. Periksa status workflow: ✅ SUCCESS atau ❌ FAILURE
+#     5. JIKA SUCCESS → selesai, tidak ada tindakan lanjutan
+#     6. JIKA FAILURE → lanjut ke R5
+#
+# ── R5: CI GAGAL → ANALISA & TEST ULANG ─────────────────────────────────────
+#   Jika CI workflow di GitHub gagal:
+#     1. Buka workflow yang gagal di GitHub Actions
+#     2. Klik job yang gagal untuk melihat log error
+#     3. Baca log dengan saksama — cari penyebab kegagalan
+#        a. Test failure (assertion error, test tidak sesuai)
+#        b. Syntax/runtime error (kode bermasalah)
+#        c. Dependency error (package hilang/versi salah)
+#        d. Environment error (konfigurasi CI berbeda dengan lokal)
+#     4. Catat error message dan line number yang disebutkan
+#     5. Perbaiki kode di localhost (kembali ke R1)
+#     6. Ulangi siklus: R1 → R2 → R3 → R4
+#     7. Ulangi sampai CI workflow SUCCESS
+#
+# ── R6: LARANGAN SKIP LANGKAH ───────────────────────────────────────────────
+#   DILARANG KERAS melewati/melompati langkah dalam siklus:
+#     Update Lokal → Test Lokal → Commit/Push → CI Auto-Test → (jika gagal) Analisa
 #   Setiap perubahan WAJIB melewati seluruh siklus ini.
+#   Tidak ada pengecualian. Tidak ada "saya yakin ini aman" tanpa test.
 #
-# R6 — DOKUMENTASI PERUBAHAN
+# ── R7: DOKUMENTASI PERUBAHAN ───────────────────────────────────────────────
 #   Setiap commit WAJIB menyertakan keterangan yang jelas tentang:
-#     - Apa yang diubah
-#     - Mengapa diubah
-#     - Dampak perubahan
+#     - Apa yang diubah (deskripsi teknis)
+#     - Mengapa diubah (alasan/bug/permintaan)
+#     - Dampak perubahan (risiko, efek samping)
+#   Contoh commit message yang baik:
+#     fix(api): perbaiki perhitungan total transaksi saat diskon
+#     update(stok): tambah filter tanggal pada riwayat stok
+#
+# ── R8: CI WORKFLOW TIDAK BOLEH DIHAPUS/DIMATIKAN ───────────────────────────
+#   File .github/workflows/ci.yml adalah bagian integral dari siklus pengembangan.
+#   DILARANG:
+#     - Menghapus file workflow CI
+#     - Menonaktifkan GitHub Actions di repositori
+#     - Mematikan required status checks (jika diaktifkan)
+#     - Push tanpa melewati CI (kecuali force majeure)
 #
 # ════════════════════════════════════════════════════════════════════════════════════
 
@@ -955,10 +999,10 @@ def run_tests():
     print("="*70)
     
     if result.wasSuccessful():
-        print("\n✅ ALL TESTS PASSED - PRODUCTION-READY\n")
+        print("\n[PASS] ALL TESTS PASSED - PRODUCTION-READY\n")
         return True
     else:
-        print("\n❌ SOME TESTS FAILED\n")
+        print("\n[FAIL] SOME TESTS FAILED\n")
         return False
 
 def main():
