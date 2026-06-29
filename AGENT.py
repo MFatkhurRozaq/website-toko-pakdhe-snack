@@ -38,6 +38,48 @@
 ╚════════════════════════════════════════════════════════════════════════════╝
 """
 
+# ════════════════════════════════════════════════════════════════════════════════════
+# PART 0: AI MODEL DEVELOPMENT WORKFLOW RULES (WAJIB DIPATUHI SEMUA AI)
+# ════════════════════════════════════════════════════════════════════════════════════
+#
+# ATURAN WAJIB UNTUK SEMUA AI MODEL DALAM PENGEMBANGAN & PEMELIHARAAN APLIKASI:
+# ────────────────────────────────────────────────────────────────────────────────
+#
+# R1 — SELESAI UPDATE → TEST LOKAL DAHULU
+#   Setelah melakukan perubahan kode apa pun di localhost, WAJIB menjalankan
+#   pengujian lokal terlebih dahulu sebelum tindakan lain.
+#   Local test command: python AGENT.py --test
+#
+# R2 — LOLOS TEST → PUSH & COMMIT KE GITHUB
+#   Jika semua test lokal lolos (✅ ALL TESTS PASSED), lanjutkan dengan:
+#     git add .
+#     git commit -m "<deskripsi perubahan>"
+#     git push
+#   Gunakan pesan commit yang deskriptif dan sesuai konvensi proyek.
+#
+# R3 — SETELAH PUSH → TES OTOMATIS DI GITHUB
+#   Setelah push ke GitHub, pantau hasil Auto-Test (GitHub Actions / CI).
+#   Pastikan pipeline CI berjalan sukses.
+#
+# R4 — GAGAL TEST → ANALISA & TEST ULANG
+#   Jika ada test yang gagal (baik lokal maupun CI):
+#     a. Analisis penyebab kegagalan dari log error
+#     b. Perbaiki kode yang bermasalah
+#     c. Test ulang di localhost (kembali ke R1)
+#     d. Ulangi sampai semua test lolos (lokal + CI)
+#
+# R5 — JANGAN SKIP LANGKAH
+#   Dilarang melewati urutan: Update → Test Lokal → Push → CI → (jika gagal) Analisa → Perbaiki → Test Ulang
+#   Setiap perubahan WAJIB melewati seluruh siklus ini.
+#
+# R6 — DOKUMENTASI PERUBAHAN
+#   Setiap commit WAJIB menyertakan keterangan yang jelas tentang:
+#     - Apa yang diubah
+#     - Mengapa diubah
+#     - Dampak perubahan
+#
+# ════════════════════════════════════════════════════════════════════════════════════
+
 import json
 import re
 import logging

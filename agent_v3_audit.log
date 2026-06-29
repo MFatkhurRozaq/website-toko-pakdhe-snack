@@ -1,0 +1,14 @@
+2026-06-29 11:49:24,264 - INFO - AUDIT: test - success
+2026-06-29 11:49:24,264 - INFO - AUDIT: test - success
+2026-06-29 11:49:24,265 - INFO - AUDIT: test - success
+2026-06-29 11:49:24,265 - INFO - AUDIT: test - success
+2026-06-29 11:49:24,265 - WARNING - [35e862c7] Tool validation FAILED
+2026-06-29 11:49:24,266 - INFO - AUDIT: invalid - rejected
+2026-06-29 11:49:24,266 - INFO - [e44a3845] Executing tool: fetch_schema
+2026-06-29 11:49:24,267 - INFO - AUDIT: fetch_schema - success
+2026-06-29 11:49:24,267 - WARNING - [bd577827] Input validation FAILED
+2026-06-29 11:49:24,267 - INFO - AUDIT: fetch_schema - rejected
+2026-06-29 11:49:24,268 - INFO - [a5cc3940] Executing tool: fetch_schema
+2026-06-29 11:49:24,268 - INFO - AUDIT: fetch_schema - success
+2026-06-29 11:49:24,268 - INFO - [2422941c] Executing tool: fetch_schema
+2026-06-29 11:49:24,268 - INFO - AUDIT: fetch_schema - success
